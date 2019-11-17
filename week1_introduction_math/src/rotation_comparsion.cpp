@@ -33,9 +33,10 @@ int main() {
   // q <- q cross dot [1, 1/2 w]^T
   Eigen::Quaterniond update_q;
   update_q.w() = 1;
-  update_q.x() = 1 / 2 * update_w.x();
-  update_q.y() = 1 / 2 * update_w.y();
-  update_q.z() = 1 / 2 * update_w.z();
+  update_q.x() = 1.0 / 2.0 * update_w.x();
+  update_q.y() = 1.0 / 2.0 * update_w.y();
+  update_q.z() = 1.0 / 2.0 * update_w.z();
+  // Dont use 1/2 * update_w.x() , otherwise you would only get 0
 
   update_q = update_q.normalized();
   // Remember to normalize the quaterion, cuz only unit quaterion could
