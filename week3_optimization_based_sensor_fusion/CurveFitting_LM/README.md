@@ -22,3 +22,6 @@ make -j4
 ./CurveFitting_LM
 ```
 
+## Results
+
+The running results of the defined problem could be shown as ![Output](Output.png)
