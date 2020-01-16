@@ -47,13 +47,16 @@ int main()
         double tx = xy_rand(generator);
         double ty = xy_rand(generator);
         double tz = z_rand(generator);
-rec
+
         Eigen::Vector3d Pw(tx, ty, tz);
         points.push_back(Pw);
+        // the feature points in the world coordinates
 
         for (int i = 0; i < poseNums; ++i) {
             Eigen::Matrix3d Rcw = camera_pose[i].Rwc.transpose();
             Eigen::Vector3d Pc = Rcw * (Pw - camera_pose[i].twc);
+            // get the camera coordinates of the feature points
+            // here, we are assuming all the feature points could be captured by every single camera pose
 
             double x = Pc.x();
             double y = Pc.y();
@@ -70,7 +73,6 @@ rec
             // 重投影误差关于相机位姿李代数的一阶变化
 
             H.block(i*6,i*6,6,6) += jacobian_Ti.transpose() * jacobian_Ti;
-
             H.block(j*3 + 6*poseNums,j*3 + 6*poseNums,3,3) += jacobian_Pj.transpose() * jacobian_Pj;
             H.block(i*6,j*3 + 6*poseNums, 6,3) += jacobian_Ti.transpose() * jacobian_Pj;
             H.block(j*3 + 6*poseNums,i*6 , 3,6) += jacobian_Pj.transpose() * jacobian_Ti;
